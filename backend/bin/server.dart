@@ -5,6 +5,8 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 
+import 'routes/todo_router.dart';
+
 // Cấu hình các routes
 final _router = Router(notFoundHandler: _notFoundHandler)
   ..get('/', _rootHandler)
@@ -111,6 +113,9 @@ void main(List<String> args) async {
       });
     },
   );
+
+  final todoRouter = TodoRouter();
+  _router.mount('/api/v1/', todoRouter.router.call);
 
   // Cấu hình một pipeline để logs các requests và middleware
   final handler = Pipeline()
